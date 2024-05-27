@@ -1,7 +1,7 @@
 from cryptography.fernet import Fernet
 import pandas as pd
-# Generate a key for encryption and decryption
-# This key should be stored securely
+
+
 key = Fernet.generate_key()
 cipher_suite = Fernet(key)
 df = pd.DataFrame(columns=["password", "encrypted_password", "decrypted_password", "key"])
@@ -10,25 +10,20 @@ getpass = str()
 
 
 def encrypt_password(password):
-    # Encrypt the password
     encrypted_password = cipher_suite.encrypt(password.encode())
     return encrypted_password
 
 
 def decrypt_password(encrypted_password):
-    # Decrypt the password
     decrypted_password = cipher_suite.decrypt(encrypted_password).decode()
     return decrypted_password
 
 
 def main():
-    # Encrypting the password
     password = input("Enter a password to encrypt: ")
     encrypted_password = encrypt_password(password)
     print(f"Encrypted password: {encrypted_password.decode()}")
 
-
-    # Decrypting the password
     decrypted_password = decrypt_password(encrypted_password)
     print(f"Decrypted password: {decrypted_password}")
 
@@ -39,7 +34,6 @@ def main():
         "key": key.decode()
     }
 
-    # append the row to the DataFrame
     global df
     df = df._append(new_row, ignore_index=True)
 
